@@ -2,86 +2,64 @@
 @config "../tailwind.config.js";
 
 :root {
-  --bg-game-dark: #0d1117;
-  --bg-game-card: rgba(22, 27, 34, 0.85);
-  --border-game: rgba(139, 92, 246, 0.25);
-  --accent-pink: #f472b6;
-  --accent-cyan: #38bdf8;
-  --accent-gold: #fbbf24;
-  --accent-purple: #a855f7;
+  --bg-dark: #090c15;
+  --bg-card: rgba(17, 22, 36, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --accent-gold: #d97706;
+  --accent-indigo: #6366f1;
+  --accent-emerald: #10b981;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #0b0f19;
-  color: #f1f5f9;
-  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: #090c15;
+  color: #f8fafc;
+  font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
 
 .font-game-title {
-  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
 }
 
-/* Floating animation */
-@keyframes floatGentle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
-}
-
-@keyframes rainbowShimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-float {
-  animation: floatGentle 4s ease-in-out infinite;
-}
-
-.animate-glow {
-  animation: pulseGlow 2.5s ease-in-out infinite;
-}
-
-/* Holographic anime card badge */
+/* Subtle Classy Metallic Badges */
 .badge-ur {
-  background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4, #f59e0b);
-  background-size: 300% 300%;
-  animation: rainbowShimmer 4s ease infinite;
+  background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(217, 119, 6, 0.25);
 }
 
 .badge-ssr {
-  background: linear-gradient(135deg, #f59e0b, #ec4899, #fbbf24);
-  background-size: 200% 200%;
+  background: linear-gradient(135deg, #6366f1, #4f46e5, #4338ca);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.25);
 }
 
 .badge-sr {
-  background: linear-gradient(135deg, #6366f1, #a855f7, #38bdf8);
+  background: linear-gradient(135deg, #334155, #1e293b);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Custom Scrollbar for Anime Game UI */
+/* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(9, 12, 21, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.4);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(244, 114, 182, 0.8);
+  background: rgba(255, 255, 255, 0.3);
 }
