@@ -2,38 +2,86 @@
 @config "../tailwind.config.js";
 
 :root {
-  --bg-page: #FAF9F6;
-  --text-main: #1C1917;
-  --brand-green: #064E3B;
-  --accent-gold: #B45309;
+  --bg-game-dark: #0d1117;
+  --bg-game-card: rgba(22, 27, 34, 0.85);
+  --border-game: rgba(139, 92, 246, 0.25);
+  --accent-pink: #f472b6;
+  --accent-cyan: #38bdf8;
+  --accent-gold: #fbbf24;
+  --accent-purple: #a855f7;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #FAF9F6;
-  color: #1C1917;
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #0b0f19;
+  color: #f1f5f9;
+  font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
 
-/* Custom Scrollbar */
+.font-game-title {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+}
+
+/* Floating animation */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes rainbowShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Holographic anime card badge */
+.badge-ur {
+  background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4, #f59e0b);
+  background-size: 300% 300%;
+  animation: rainbowShimmer 4s ease infinite;
+}
+
+.badge-ssr {
+  background: linear-gradient(135deg, #f59e0b, #ec4899, #fbbf24);
+  background-size: 200% 200%;
+}
+
+.badge-sr {
+  background: linear-gradient(135deg, #6366f1, #a855f7, #38bdf8);
+}
+
+/* Custom Scrollbar for Anime Game UI */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(15, 23, 42, 0.6);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(120, 113, 108, 0.3);
+  background: rgba(168, 85, 247, 0.4);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 78, 59, 0.7);
+  background: rgba(244, 114, 182, 0.8);
 }

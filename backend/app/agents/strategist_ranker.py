@@ -60,7 +60,7 @@ class StrategistRankerAgent:
 
         # Sort descending by composite score
         scored_items.sort(key=lambda x: x[0], reverse=True)
-        top_candidates = scored_items[:5]
+        top_candidates = scored_items[:10]
 
         top_5_list: List[TopOpportunity] = []
         for rank, (composite, fit, generosity, competitiveness, v_opp) in enumerate(top_candidates, start=1):
@@ -133,7 +133,7 @@ class StrategistRankerAgent:
             name=self.name,
             status="success",
             phase="rank",
-            message=f"Selected TOP 5 strategic scholarship matches across {', '.join(set([t.opportunity.opportunity.country for t in top_5_list]))}.",
+            message=f"Selected TOP {len(top_5_list)} strategic scholarship matches across {', '.join(set([t.opportunity.opportunity.country for t in top_5_list]))}.",
             details={"top_5": [{"rank": t.rank, "title": t.opportunity.opportunity.title, "fit": t.fit_score} for t in top_5_list]}
         )
         return state

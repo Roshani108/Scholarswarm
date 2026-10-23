@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
-import { LuxePlatform } from './components/LuxePlatform';
+import { AnimeGamePlatform } from './components/AnimeGamePlatform';
 import { useSwarmSSE } from './hooks/useSwarmSSE';
 import { API_BASE_URL } from './config/api';
 import type { DemoProfile } from './types/swarm';
@@ -38,10 +38,9 @@ export function App() {
     };
   }, []);
 
-  // Ensure clean white theme
+  // Anime Game Dark Nebula Theme
   useEffect(() => {
-    document.documentElement.classList.remove('dark');
-    document.documentElement.classList.remove('light');
+    document.documentElement.classList.add('dark');
   }, []);
 
   // Load demo profiles on mount
@@ -99,7 +98,7 @@ export function App() {
   };
 
   return (
-    <LuxePlatform
+    <AnimeGamePlatform
       demoProfiles={demoProfiles}
       selectedProfile={selectedDemoProfile}
       onSelectProfile={handleSelectProfile}
