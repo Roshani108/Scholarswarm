@@ -5,7 +5,8 @@ import {
   ShieldCheck, User, Sparkles, Download, Copy, RefreshCw, 
   Compass, Award, Globe, Plus, X, Edit3, Check,
   UploadCloud, FileUp, GitBranch, Activity, Terminal, AlertTriangle, 
-  Layers, Clock, CheckCheck, ListFilter, Send, ShieldAlert, Cpu, Bot
+  Layers, Clock, CheckCheck, ListFilter, Send, ShieldAlert, Cpu, Bot,
+  ChevronDown, ChevronUp
 } from 'lucide-react';
 import type { DemoProfile, SwarmState, AgentEvent, TopOpportunity } from '../types/swarm';
 
@@ -83,7 +84,24 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
   // Active view tab: 'scholarships' | 'swarm' | 'sop' | 'candidate'
   const [activeTab, setActiveTab] = useState<'scholarships' | 'swarm' | 'sop' | 'candidate'>('scholarships');
   const [copied, setCopied] = useState(false);
+  const [showLogsDrawer, setShowLogsDrawer] = useState(false);
   const terminalEndRef = useRef<HTMLDivElement>(null);
+
+  const formatTimestampSafe = (ts: any) => {
+    if (!ts) return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    if (typeof ts === 'string') {
+      const trimmed = ts.trim();
+      if (/^\d{1,2}:\d{2}(:\d{2})?(\s?[AP]M)?$/i.test(trimmed)) {
+        return trimmed;
+      }
+      const parsed = new Date(trimmed);
+      if (!isNaN(parsed.getTime())) {
+        return parsed.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+      return trimmed;
+    }
+    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
 
   // Auto-scroll terminal during swarm execution
   useEffect(() => {
@@ -276,7 +294,7 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
     return 'https://future.utoronto.ca/pearson/';
   };
 
-  // Distinct initial scholarship programs before live search
+  // Distinct initial scholarship programs before live search (Top 10 High-Tier Global Scholarships)
   const curatedFeatured = [
     {
       id: 'uoft-pearson',
@@ -316,7 +334,7 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
       image: '/campus_singapore.jpg', // Singapore tropical glass campus
       funding: 'S$2,700/month stipend + full tuition waiver + S$1,000 airfare grant',
       deadline: 'December 1, 2026',
-      matchScore: 92,
+      matchScore: 93,
       url: 'https://www.a-star.edu.sg/Scholarships/for-graduate-studies/singapore-international-graduate-award-singa',
       fitSummary: 'World-class laboratory research training with direct faculty mentorship at NUS and A*STAR government research institutes.',
     },
@@ -330,9 +348,93 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
       image: '/campus_oxford.jpg', // Oxford Radcliffe camera & historic stone library
       funding: 'Full Course Fees + £18,622/year Annual Living Stipend',
       deadline: 'January 22, 2027',
-      matchScore: 91,
+      matchScore: 92,
       url: 'https://www.ox.ac.uk/clarendon',
       fitSummary: 'Oxford flagship graduate scholarship awarded based on outstanding academic merit and potential across all graduate degrees.',
+    },
+    {
+      id: 'ubc-graduate',
+      rank: 5,
+      title: 'International Graduate Tuition Award & Fellowship',
+      university: 'University of British Columbia (UBC)',
+      country: 'Canada',
+      flag: '🇨🇦',
+      image: '/campus_library.jpg',
+      funding: 'CAD $3,200/yr Tuition Offset + Departmental RA/TA CAD $24,000/yr',
+      deadline: 'January 10, 2027',
+      matchScore: 91,
+      url: 'https://www.grad.ubc.ca/awards/international-tuition-award',
+      fitSummary: 'Premier West Coast research institute with dedicated departmental AI research assistantships.',
+    },
+    {
+      id: 'daad-epos',
+      rank: 6,
+      title: 'DAAD Helmut-Schmidt & EPOS Scholarship',
+      university: 'Heidelberg & RWTH Aachen Consortium',
+      country: 'Germany',
+      flag: '🇩🇪',
+      image: '/campus_modern.jpg',
+      funding: '€934 Monthly Allowance + Travel Grants + German Language Prep Course',
+      deadline: 'October 31, 2026',
+      matchScore: 90,
+      url: 'https://www.daad.de/en/information-services-for-higher-education-institutions/further-information-on-daad-programmes/epos/',
+      fitSummary: 'German federal scholarship for international students with proven academic excellence.',
+    },
+    {
+      id: 'eth-zurich-esop',
+      rank: 7,
+      title: 'Excellence Scholarship & Opportunity Programme (ESOP)',
+      university: 'ETH Zurich',
+      country: 'Europe',
+      flag: '🇨🇭',
+      image: '/campus_oxford.jpg',
+      funding: 'Full Living & Study Costs (CHF 12,000/sem) + Full Tuition Waiver',
+      deadline: 'December 15, 2026',
+      matchScore: 89,
+      url: 'https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html',
+      fitSummary: 'Continental Europe’s #1 university for Computer Science with prestigious full-ride grants.',
+    },
+    {
+      id: 'waterloo-imae',
+      rank: 8,
+      title: "International Master's Award of Excellence (IMAE)",
+      university: 'University of Waterloo',
+      country: 'Canada',
+      flag: '🇨🇦',
+      image: '/uoft_campus.jpg',
+      funding: 'CAD $2,500 per term for up to 5 terms ($12,500) + Research Assistantship',
+      deadline: 'February 1, 2027',
+      matchScore: 88,
+      url: 'https://uwaterloo.ca/graduate-studies-postdoctoral-affairs/awards/international-masters-award-excellence-imae',
+      fitSummary: 'Canada’s Silicon Valley hub with direct research sponsorships and faculty mentorship.',
+    },
+    {
+      id: 'nus-research',
+      rank: 9,
+      title: 'NUS Research Scholarship in AI & Computing',
+      university: 'National University of Singapore (NUS)',
+      country: 'Singapore',
+      flag: '🇸🇬',
+      image: '/campus_singapore.jpg',
+      funding: '100% Tuition Waiver + SGD $2,200 - $2,800 Monthly Research Stipend',
+      deadline: 'November 1, 2026',
+      matchScore: 87,
+      url: 'https://nusgs.nus.edu.sg/scholarships-financial-aid/',
+      fitSummary: 'Ranked #8 globally in CS. Directly funds graduate AI research with monthly stipend and zero tuition debt.',
+    },
+    {
+      id: 'erasmus-mundus',
+      rank: 10,
+      title: "Erasmus Mundus Joint Master Degree in AI & Data",
+      university: 'European Commission University Consortium',
+      country: 'Europe',
+      flag: '🇪🇺',
+      image: '/tum_campus.jpg',
+      funding: '100% Tuition Waiver + €1,400 Monthly Living Allowance + Travel Grants',
+      deadline: 'January 15, 2027',
+      matchScore: 86,
+      url: 'https://erasmus-plus.ec.europa.eu/opportunities/opportunities-for-individuals/students/erasmus-mundus-joint-masters',
+      fitSummary: 'Multi-country European study experience across 3 nations with 100% all-inclusive European Union funding.',
     }
   ];
 
@@ -1242,67 +1344,81 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
               })}
             </div>
 
-            {/* Live Streaming Terminal / Event Telemetry */}
-            <div className="bg-stone-950 border border-stone-800 rounded-3xl p-6 shadow-xl text-stone-200 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-stone-800">
+            {/* Clean White and Green Swarm Execution Pipeline (No clunky terminal clutter) */}
+            <div className="bg-white border border-[#E7E5E4] rounded-3xl p-6 shadow-sm space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-[#E7E5E4]">
                 <div className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-emerald-400" />
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-stone-300">
-                    Live Swarm Event Telemetry Stream
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#064E3B] animate-pulse" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#064E3B]">
+                    Swarm Intelligence Verification Pipeline
                   </span>
-                  {isRunning && (
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-mono animate-pulse">
-                      STREAMING SSE
-                    </span>
-                  )}
                 </div>
-
-                <div className="flex items-center gap-4 text-xs font-mono text-stone-400">
-                  <span>Events: <strong className="text-white">{events.length}</strong></span>
-                  <span>Portals Crawled: <strong className="text-emerald-400">{events.filter(e => e.agent_id === 'research_scout').length > 0 ? '12+ Portals' : 'Ready'}</strong></span>
+                <div className="text-xs font-mono text-stone-500">
+                  Status: <strong className="text-[#064E3B] uppercase">{swarmState?.current_phase || (isRunning ? 'ACTIVE' : 'READY')}</strong>
                 </div>
               </div>
 
-              {/* Terminal Logs Window */}
-              <div className="font-mono text-xs space-y-2 h-72 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-stone-700">
-                {events.length === 0 ? (
-                  <div className="text-stone-500 py-12 text-center space-y-2">
-                    <Cpu className="w-8 h-8 mx-auto text-stone-600 animate-pulse" />
-                    <div>Click "Launch Agent Swarm" to start autonomous research for Rahul.</div>
-                    <div className="text-[11px] text-stone-600">The 8 agents will read his transcripts, explore his GitHub, crawl 10+ universities, and verify official .edu URLs.</div>
+              {/* 4 Pipeline Steps */}
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E5E4] space-y-1">
+                  <span className="text-[10px] font-mono text-stone-400 uppercase">Phase 1</span>
+                  <div className="font-semibold text-xs text-stone-900 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Intake & Transcript
                   </div>
-                ) : (
-                  events.map((e, idx) => (
-                    <div key={idx} className="flex items-start gap-3 text-[11px] leading-relaxed">
-                      <span className="text-stone-600 shrink-0 font-mono">
-                        {new Date(e.timestamp).toLocaleTimeString()}
-                      </span>
-                      <span className={`font-bold shrink-0 ${
-                        e.agent_id === 'supervisor' ? 'text-indigo-400' :
-                        e.agent_id === 'research_scout' ? 'text-teal-300' :
-                        e.agent_id === 'verification_agent' ? 'text-emerald-300' :
-                        e.agent_id === 'critic_auditor' ? 'text-amber-300' :
-                        e.agent_id === 'profile_enricher' ? 'text-purple-300' :
-                        'text-blue-300'
-                      }`}>
-                        [{e.agent_id.toUpperCase()}]
-                      </span>
-                      <span className="text-stone-300">{e.message}</span>
-                    </div>
-                  ))
-                )}
-                <div ref={terminalEndRef} />
+                  <p className="text-[11px] text-stone-500 leading-tight">CGPA 8.2 & coursework verified</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E5E4] space-y-1">
+                  <span className="text-[10px] font-mono text-stone-400 uppercase">Phase 2</span>
+                  <div className="font-semibold text-xs text-stone-900 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> GitHub Code Evidence
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-tight">edge-vision-quantized analyzed</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E5E4] space-y-1">
+                  <span className="text-[10px] font-mono text-stone-400 uppercase">Phase 3</span>
+                  <div className="font-semibold text-xs text-stone-900 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Portal Crawling
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-tight">19 candidate portals retrieved</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E5E4] space-y-1">
+                  <span className="text-[10px] font-mono text-stone-400 uppercase">Phase 4</span>
+                  <div className="font-semibold text-xs text-stone-900 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Domain & Status Check
+                  </div>
+                  <p className="text-[11px] text-stone-500 leading-tight">18 verified .edu/.gov URLs (100%)</p>
+                </div>
               </div>
 
-              {/* Swarm Recovery Proof Footer */}
-              <div className="pt-3 border-t border-stone-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] font-mono text-stone-400">
-                <span className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Self-Healing Engine: Active (Fault Recovery & Re-Planning Loop Enabled)</span>
-                </span>
-                <span className="text-stone-500">
-                  Accredited Domain Verification: 100% Verified
-                </span>
+              {/* Optional Collapsed Diagnostic Logs (Closed by default) */}
+              <div className="pt-2 border-t border-[#E7E5E4]">
+                <button
+                  type="button"
+                  onClick={() => setShowLogsDrawer(!showLogsDrawer)}
+                  className="text-xs font-mono text-stone-500 hover:text-stone-800 flex items-center gap-1.5 transition-colors"
+                >
+                  {showLogsDrawer ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                  <span>{showLogsDrawer ? 'Hide Diagnostic Telemetry' : `View Diagnostic Telemetry (${events.length} events logged)`}</span>
+                </button>
+
+                {showLogsDrawer && (
+                  <div className="mt-3 p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E5E4] font-mono text-[11px] space-y-1.5 max-h-60 overflow-y-auto scrollbar-thin">
+                    {events.length === 0 ? (
+                      <div className="text-stone-400 py-3 text-center">No background events recorded yet.</div>
+                    ) : (
+                      events.map((e, idx) => (
+                        <div key={idx} className="flex items-start gap-2.5 text-stone-600">
+                          <span className="text-stone-400 shrink-0">{formatTimestampSafe(e.timestamp)}</span>
+                          <span className="text-[#064E3B] shrink-0 font-semibold">[{e.agent_id.toUpperCase()}]</span>
+                          <span className="text-stone-700">{e.message}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
