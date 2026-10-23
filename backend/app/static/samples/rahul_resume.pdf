@@ -1,0 +1,73 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 2701 >>
+stream
+BT
+/F1 10 Tf
+50 780 Td
+14 TL
+/F1 11 Tf (RAHUL SHARMA) Tj T* /F1 9 Tf
+(Jalandhar, Punjab, India | rahul.cse.dev@gmail.com | github.com/rahul-cse | linkedin.com/in/rahul-cse-jalandhar) Tj T*
+() Tj T*
+/F1 11 Tf (EDUCATION) Tj T* /F1 9 Tf
+(Dr. B. R. Ambedkar National Institute of Technology \(NIT\) Jalandhar) Tj T*
+(Bachelor of Technology \(B.Tech\) in Computer Science & Engineering) Tj T*
+(Expected Graduation: May 2026) Tj T*
+(Cumulative Grade Point Average \(CGPA\): 8.2 / 10.0 \(First Class with Distinction\)) Tj T*
+(Relevant Coursework: Data Structures & Algorithms, Operating Systems, Distributed Systems, Machine Learning, Deep Neural Networks, Database Engineering, Compiler Design) Tj T*
+() Tj T*
+/F1 11 Tf (TECHNICAL SKILLS) Tj T* /F1 9 Tf
+(Languages: Python, C++, SQL, TypeScript, Bash) Tj T*
+(Frameworks & Libraries: PyTorch, FastAPI, LangGraph, LangChain, HuggingFace Transformers, OpenCV, Docker, PostgreSQL, Redis, Git) Tj T*
+(Specializations: Autonomous Multi-Agent AI Systems, Retrieval-Augmented Generation \(RAG\), Edge Computing, Computer Vision) Tj T*
+() Tj T*
+(ACADEMIC & OPEN SOURCE PROJECTS) Tj T*
+(1. Autonomous Agentic Research Engine \(github.com/rahul-cse/agentic-research\)) Tj T*
+(   - Architected a multi-agent hierarchical research framework using LangGraph and ChromaDB vector search.) Tj T*
+(   - Implemented dynamic query decomposition, automated web extraction, and fact-checking synthesis.) Tj T*
+(   - Achieved 40% reduction in research latency with parallel task routing; received 14 GitHub stars.) Tj T*
+() Tj T*
+(2. Edge-Optimized YOLO Object Detection Pipeline \(github.com/rahul-cse/edge-yolo\)) Tj T*
+(   - Developed an INT8-quantized object detector deployed on NVIDIA Jetson Nano running at 32 FPS.) Tj T*
+(   - Built custom TensorRT inference engine with C++ bindings for low-latency robotics perception.) Tj T*
+() Tj T*
+(3. Distributed Vector Search Microservice) Tj T*
+(   - Engineered an async vector embedding service using FastAPI and pgvector capable of handling 500 QPS.) Tj T*
+(   - Integrated semantic caching with Redis reducing LLM call costs by 65%.) Tj T*
+() Tj T*
+/F1 11 Tf (HONORS & ACHIEVEMENTS) Tj T* /F1 9 Tf
+(- Finalist, Smart India Hackathon \(National Level Software Edition, Top 30 teams out of 2,500+\)) Tj T*
+(- Recipient of NIT Jalandhar Academic Merit Certificate \(Top 10% of CSE cohort\)) Tj T*
+(- Scored 98.4 percentile in Joint Entrance Examination \(JEE Mains\)) Tj T*
+() Tj T*
+(STANDARDIZED TESTS & LANGUAGES) Tj T*
+(- IELTS Academic: Overall 7.5 \(Listening: 8.5, Reading: 8.0, Writing: 7.0, Speaking: 7.0\)) Tj T*
+(- Languages: English \(Professional Working Proficiency\), Hindi \(Native\), Punjabi \(Native\)) Tj T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000227 00000 n 
+0000000305 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+3101
+%%EOF

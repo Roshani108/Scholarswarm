@@ -1,10 +1,12 @@
 import asyncio
 import json
 import uuid
+import os
 from typing import Dict, Optional, List, Any
 from fastapi import FastAPI, UploadFile, File, Form, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from app.models.profile import StudentProfile
 from app.agents.state import SwarmState
@@ -83,16 +85,6 @@ DEMO_PROFILES = {
         "test_scores": {"IELTS": "7.5", "GRE": "Not taken yet"}
     }
 }
-
-@app.get("/")
-async def root():
-    return {
-        "status": "online",
-        "service": "ScholarSwarm Multi-Agent Swarm API",
-        "docs_url": "/docs",
-        "health_url": "/api/health",
-        "demo_profiles_url": "/api/demo/profiles"
-    }
 
 @app.get("/api/health")
 async def health_check():
@@ -253,3 +245,34 @@ async def regenerate_sop(payload: Dict[str, Any]):
 
     await application_writer_agent.run(state, dummy_emit, opportunity_id=opportunity_id)
     return state.sop_draft
+
+# Static files and Single Page Application (SPA) delivery for single-URL deployment
+STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+
+if os.path.isdir(STATIC_DIR):
+    assets_dir = os.path.join(STATIC_DIR, "assets")
+    if os.path.isdir(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    samples_dir = os.path.join(STATIC_DIR, "samples")
+    if os.path.isdir(samples_dir):
+        app.mount("/samples", StaticFiles(directory=samples_dir), name="samples")
+
+    @app.get("/")
+    async def serve_index():
+        index_file = os.path.join(STATIC_DIR, "index.html")
+        if os.path.exists(index_file):
+            return FileResponse(index_file)
+        return {"status": "online", "service": "ScholarSwarm AI Platform"}
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api/") or full_path.startswith("docs") or full_path.startswith("openapi.json"):
+            raise HTTPException(status_code=404, detail="Endpoint not found")
+        file_path = os.path.join(STATIC_DIR, full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+        index_file = os.path.join(STATIC_DIR, "index.html")
+        if os.path.exists(index_file):
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Not found")
