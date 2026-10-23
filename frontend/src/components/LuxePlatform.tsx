@@ -6,9 +6,10 @@ import {
   Compass, Award, Globe, Plus, X, Edit3, Check,
   UploadCloud, FileUp, GitBranch, Activity, Terminal, AlertTriangle, 
   Layers, Clock, CheckCheck, ListFilter, Send, ShieldAlert, Cpu, Bot,
-  ChevronDown, ChevronUp
+  ChevronDown, ChevronUp, Volume2, VolumeX, Printer
 } from 'lucide-react';
 import type { DemoProfile, SwarmState, AgentEvent, TopOpportunity } from '../types/swarm';
+import { gameSound } from '../utils/sound';
 
 interface LuxePlatformProps {
   demoProfiles: DemoProfile[];
@@ -81,11 +82,36 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
   const [sopMode, setSopMode] = useState<'sop' | 'lor'>('sop');
   const [expandedOpportunityId, setExpandedOpportunityId] = useState<string | null>(null);
 
-  // Active view tab: 'scholarships' | 'swarm' | 'sop' | 'candidate'
-  const [activeTab, setActiveTab] = useState<'scholarships' | 'swarm' | 'sop' | 'candidate'>('scholarships');
+  // Active view tab: 'scholarships' | 'calendar' | 'swarm' | 'sop' | 'candidate'
+  const [activeTab, setActiveTab] = useState<'scholarships' | 'calendar' | 'swarm' | 'sop' | 'candidate'>('scholarships');
   const [copied, setCopied] = useState(false);
   const [showLogsDrawer, setShowLogsDrawer] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const terminalEndRef = useRef<HTMLDivElement>(null);
+
+  const toggleSound = () => {
+    const next = !soundEnabled;
+    setSoundEnabled(next);
+    gameSound.enabled = next;
+    if (next) gameSound.playClick();
+  };
+
+  const handleTabSwitch = (tab: 'scholarships' | 'calendar' | 'swarm' | 'sop' | 'candidate') => {
+    if (soundEnabled) gameSound.playClick();
+    setActiveTab(tab);
+  };
+
+  const handlePrintDossier = () => {
+    if (soundEnabled) gameSound.playClick();
+    window.print();
+  };
+
+  // Play fanfare when research completes
+  useEffect(() => {
+    if (isCompleted && soundEnabled) {
+      gameSound.playVictory();
+    }
+  }, [isCompleted, soundEnabled]);
 
   const formatTimestampSafe = (ts: any) => {
     if (!ts) return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -461,17 +487,30 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
           {/* Centered Pill Tabs */}
           <div className="hidden md:flex items-center gap-1 bg-[#F5F5F0] p-1.5 rounded-full border border-[#E7E5E4]">
             <button
-              onClick={() => setActiveTab('scholarships')}
+              onClick={() => handleTabSwitch('scholarships')}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                 activeTab === 'scholarships'
                   ? 'bg-white text-[#064E3B] shadow-sm font-extrabold'
                   : 'text-stone-600 hover:text-stone-900'
               }`}
             >
-              Curated Matches {topOpportunities.length > 0 && <span className="ml-1.5 px-1.5 py-0.2 rounded-full bg-[#064E3B] text-white text-[10px]">{topOpportunities.length}</span>}
+              Top 10 Shortlist {topOpportunities.length > 0 && <span className="ml-1.5 px-1.5 py-0.2 rounded-full bg-[#064E3B] text-white text-[10px]">{topOpportunities.length}</span>}
             </button>
+
             <button
-              onClick={() => setActiveTab('swarm')}
+              onClick={() => handleTabSwitch('calendar')}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeTab === 'calendar'
+                  ? 'bg-white text-[#064E3B] shadow-sm font-extrabold'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+            >
+              <Calendar className="w-3.5 h-3.5 text-amber-700" />
+              <span>Deadline Calendar</span>
+            </button>
+
+            <button
+              onClick={() => handleTabSwitch('swarm')}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === 'swarm'
                   ? 'bg-white text-[#064E3B] shadow-sm font-extrabold'
@@ -482,8 +521,9 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
               <span>AI Agent Swarm</span>
               {isRunning && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />}
             </button>
+
             <button
-              onClick={() => setActiveTab('sop')}
+              onClick={() => handleTabSwitch('sop')}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                 activeTab === 'sop'
                   ? 'bg-white text-[#064E3B] shadow-sm font-extrabold'
@@ -492,36 +532,66 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
             >
               SOP & LOR Studio {sopDraft && <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-600 ml-1" />}
             </button>
+
             <button
-              onClick={() => setActiveTab('candidate')}
+              onClick={() => handleTabSwitch('candidate')}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                 activeTab === 'candidate'
                   ? 'bg-white text-[#064E3B] shadow-sm font-extrabold'
                   : 'text-stone-600 hover:text-stone-900'
               }`}
             >
-              Student Intake & CV
+              Candidate Intake & CV
             </button>
           </div>
 
-          {/* Quick Find Scholarships Action */}
-          <button
-            onClick={() => handleLaunchSearch()}
-            disabled={isLoading || isRunning}
-            className="px-5 py-2.5 rounded-xl bg-[#064E3B] hover:bg-[#022C22] text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 disabled:opacity-50"
-          >
-            {isLoading || isRunning ? (
-              <>
-                <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Swarm Crawling...</span>
-              </>
-            ) : (
-              <>
-                <Search className="w-3.5 h-3.5 text-amber-300" />
-                <span>Launch Agent Swarm</span>
-              </>
-            )}
-          </button>
+          {/* Right Action Bar (Audio, PDF Export, Launch Swarm) */}
+          <div className="flex items-center gap-2">
+            {/* Audio Cue Toggle */}
+            <button
+              type="button"
+              onClick={toggleSound}
+              className={`p-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                soundEnabled 
+                  ? 'bg-emerald-50 border-emerald-200 text-[#064E3B] shadow-2xs' 
+                  : 'bg-stone-100 border-stone-200 text-stone-400'
+              }`}
+              title="Toggle Audio Cues (Sounds)"
+            >
+              {soundEnabled ? <Volume2 className="w-4 h-4 text-emerald-700" /> : <VolumeX className="w-4 h-4 text-stone-400" />}
+              <span className="hidden xl:inline text-[11px]">{soundEnabled ? 'Audio On' : 'Audio Off'}</span>
+            </button>
+
+            {/* Print / Save PDF Dossier */}
+            <button
+              type="button"
+              onClick={handlePrintDossier}
+              className="p-2 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-2xs"
+              title="Print or Save Shortlist & SOP as PDF"
+            >
+              <Printer className="w-4 h-4 text-[#064E3B]" />
+              <span className="hidden sm:inline text-xs font-bold">Save PDF</span>
+            </button>
+
+            {/* Quick Find Scholarships Action */}
+            <button
+              onClick={() => handleLaunchSearch()}
+              disabled={isLoading || isRunning}
+              className="px-5 py-2.5 rounded-xl bg-[#064E3B] hover:bg-[#022C22] text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 disabled:opacity-50"
+            >
+              {isLoading || isRunning ? (
+                <>
+                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Swarm Crawling...</span>
+                </>
+              ) : (
+                <>
+                  <Search className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Launch Agent Swarm</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -1257,6 +1327,92 @@ export const LuxePlatform: React.FC<LuxePlatformProps> = ({
                   </div>
                 ))
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 1.5: APPLICATION DEADLINE CALENDAR */}
+        {activeTab === 'calendar' && (
+          <div className="space-y-6">
+            <div className="bg-white border border-[#E7E5E4] rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold text-[#064E3B] uppercase tracking-wider block mb-1">
+                  Chronological Admissions Timeline
+                </span>
+                <h2 className="text-2xl font-extrabold text-[#1C1917] tracking-tight">
+                  Application Deadlines & Milestones
+                </h2>
+                <p className="text-xs text-stone-500 mt-1 max-w-xl">
+                  Ordered by upcoming priority cutoff dates so Rahul never misses a scholarship submission window.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handlePrintDossier}
+                  className="px-4 py-2 rounded-xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-700 text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-all"
+                >
+                  <Printer className="w-4 h-4 text-[#064E3B]" />
+                  <span>Print Deadline Schedule</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Timeline Cards */}
+            <div className="space-y-4">
+              {curatedFeatured.map((item, idx) => {
+                const isUrgent = item.deadline.includes('October') || item.deadline.includes('November');
+                const isWinter = item.deadline.includes('December');
+                return (
+                  <div
+                    key={item.id}
+                    className="bg-white border border-[#E7E5E4] rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-[#FAF9F6] border border-stone-200 flex flex-col items-center justify-center shrink-0">
+                        <span className="text-[10px] font-mono text-stone-400 font-bold uppercase">Rank</span>
+                        <span className="text-sm font-extrabold text-[#064E3B]">#{idx + 1}</span>
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-stone-900">{item.university}</span>
+                          <span className="text-sm">{item.flag}</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            isUrgent ? 'bg-rose-100 text-rose-800 border border-rose-200' :
+                            isWinter ? 'bg-amber-100 text-amber-800 border border-amber-200' :
+                            'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                          }`}>
+                            {isUrgent ? 'Priority Cutoff' : isWinter ? 'Winter Window' : 'Regular Cycle'}
+                          </span>
+                        </div>
+                        <div className="text-sm font-semibold text-stone-800">{item.title}</div>
+                        <div className="text-xs text-stone-500 flex items-center gap-2">
+                          <span className="font-semibold text-emerald-800">{item.funding}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-stone-100">
+                      <div className="text-right sm:text-right">
+                        <span className="text-[10px] font-mono text-stone-400 block uppercase">Final Deadline</span>
+                        <span className="text-xs font-bold font-mono text-stone-900">{item.deadline}</span>
+                      </div>
+
+                      <a
+                        href={formatApplyUrl(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-xl bg-[#064E3B] hover:bg-[#022C22] text-white text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all"
+                      >
+                        <Globe className="w-3.5 h-3.5" />
+                        <span>Apply on Portal ↗</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
