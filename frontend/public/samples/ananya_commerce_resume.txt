@@ -1,0 +1,27 @@
+ANANYA SEN
+Kolkata, West Bengal, India | ananya.fintech@gmail.com | github.com/ananya-fintech | linkedin.com/in/ananya-sen
+
+EDUCATION
+St. Xavier's College (Autonomous), Kolkata
+Bachelor of Commerce (Honours in Finance & Accounting)
+Expected Graduation: June 2026
+Cumulative Grade Point Average (CGPA): 8.8 / 10.0 (First Class with Distinction)
+Relevant Coursework: Advanced Financial Accounting, Econometrics, Quantitative Techniques in Finance, Corporate Valuation, Sustainable Finance & ESG
+
+TECHNICAL & ANALYTICAL SKILLS
+Financial Analytics: Quantitative Portfolio Optimization, DCF Valuation, Risk Modeling (Value at Risk), Green Bond Pricing
+Programming & Tools: Python (pandas, numpy, scipy, statsmodels), SQL, R, Bloomberg Terminal Certified, Excel VBA, Git
+
+PROJECTS & RESEARCH
+1. Green Bond Yield Spread Predictor (github.com/ananya-fintech/green-bond-analytics)
+   - Built an econometric machine learning model evaluating yield premiums (greenium) across 450 European municipal bonds.
+   - Applied regularized Lasso and Ridge regression to quantify pricing determinants based on ESG ratings.
+
+2. Algorithmic Mean-Variance Portfolio Balancer
+   - Engineered an automated Markowitz efficient frontier optimizer in Python incorporating ESG constraint penalties.
+   - Backtested strategy across S&P 500 and DAX equity constituents over a 10-year horizon.
+
+HONORS & LEADERSHIP
+- 1st Place, National Inter-College Financial Valuation Challenge (2025)
+- President, Xavier's Finance & Investment Society (led 40-member research committee)
+- IELTS Academic Score: 8.0 (Listening: 8.5, Reading: 8.5, Writing: 7.5, Speaking: 7.5)
