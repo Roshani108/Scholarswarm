@@ -1,0 +1,37 @@
+RAHUL SHARMA
+Jalandhar, Punjab, India | rahul.cse.dev@gmail.com | github.com/rahul-cse | linkedin.com/in/rahul-cse-jalandhar
+
+EDUCATION
+Dr. B. R. Ambedkar National Institute of Technology (NIT) Jalandhar
+Bachelor of Technology (B.Tech) in Computer Science & Engineering
+Expected Graduation: May 2026
+Cumulative Grade Point Average (CGPA): 8.2 / 10.0 (First Class with Distinction)
+Relevant Coursework: Data Structures & Algorithms, Operating Systems, Distributed Systems, Machine Learning, Deep Neural Networks, Database Engineering, Compiler Design
+
+TECHNICAL SKILLS
+Languages: Python, C++, SQL, TypeScript, Bash
+Frameworks & Libraries: PyTorch, FastAPI, LangGraph, LangChain, HuggingFace Transformers, OpenCV, Docker, PostgreSQL, Redis, Git
+Specializations: Autonomous Multi-Agent AI Systems, Retrieval-Augmented Generation (RAG), Edge Computing, Computer Vision
+
+ACADEMIC & OPEN SOURCE PROJECTS
+1. Autonomous Agentic Research Engine (github.com/rahul-cse/agentic-research)
+   - Architected a multi-agent hierarchical research framework using LangGraph and ChromaDB vector search.
+   - Implemented dynamic query decomposition, automated web extraction, and fact-checking synthesis.
+   - Achieved 40% reduction in research latency with parallel task routing; received 14 GitHub stars.
+
+2. Edge-Optimized YOLO Object Detection Pipeline (github.com/rahul-cse/edge-yolo)
+   - Developed an INT8-quantized object detector deployed on NVIDIA Jetson Nano running at 32 FPS.
+   - Built custom TensorRT inference engine with C++ bindings for low-latency robotics perception.
+
+3. Distributed Vector Search Microservice
+   - Engineered an async vector embedding service using FastAPI and pgvector capable of handling 500 QPS.
+   - Integrated semantic caching with Redis reducing LLM call costs by 65%.
+
+HONORS & ACHIEVEMENTS
+- Finalist, Smart India Hackathon (National Level Software Edition, Top 30 teams out of 2,500+)
+- Recipient of NIT Jalandhar Academic Merit Certificate (Top 10% of CSE cohort)
+- Scored 98.4 percentile in Joint Entrance Examination (JEE Mains)
+
+STANDARDIZED TESTS & LANGUAGES
+- IELTS Academic: Overall 7.5 (Listening: 8.5, Reading: 8.0, Writing: 7.0, Speaking: 7.0)
+- Languages: English (Professional Working Proficiency), Hindi (Native), Punjabi (Native)

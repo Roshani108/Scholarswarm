@@ -1,0 +1,27 @@
+PRIYA NAIR
+Vellore, Tamil Nadu, India | priya.biotech.vit@gmail.com | github.com/priya-biotech
+
+EDUCATION
+Vellore Institute of Technology (VIT), Vellore
+Bachelor of Technology (B.Tech) in Biotechnology
+Expected Graduation: July 2025
+Cumulative Grade Point Average (CGPA): 8.5 / 10.0 (First Class with Distinction)
+Relevant Coursework: Molecular Biology, Bioinformatics & Computational Genomics, Genetic Engineering, Immunology, Bioprocess Engineering, Python for Life Sciences
+
+LABORATORY & COMPUTATIONAL SKILLS
+Wet Lab: PCR Amplification, Gel Electrophoresis, Bacterial Transformation, Cell Culture, Protein Purification (FPLC)
+Dry Lab / Bioinformatics: Next-Generation Sequencing (NGS) pipeline development, Biopython, BLAST+, PyMOL, GROMACS, Linux Shell Scripting
+
+RESEARCH PROJECTS
+1. CRISPR-Cas9 Off-Target Binding Prediction Pipeline (github.com/priya-biotech/crispr-deep-target)
+   - Developed a sequence-based deep convolutional network in Python/PyTorch predicting unintended guide RNA off-target cleavages.
+   - Evaluated model on benchmark genomic datasets with an AUC of 0.91.
+
+2. Bacterial Genome Assembly and Annotation
+   - Processed Illumina paired-end FASTQ reads for novel halophilic bacterial strains.
+   - Conducted de novo genome assembly using SPAdes and functional annotation via Prokka.
+
+AWARDS & LANGUAGE
+- Winner, BioTech Innovation Conclave 2024
+- IELTS Academic: 7.5 Overall
+- German Language: Goethe-Zertifikat A1 Completed (Learning A2)

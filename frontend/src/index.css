@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+:root {
+  --bg-page: #FAF9F6;
+  --text-main: #1C1917;
+  --brand-green: #064E3B;
+  --accent-gold: #B45309;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #FAF9F6;
+  color: #1C1917;
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 113, 108, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 78, 59, 0.7);
+}
