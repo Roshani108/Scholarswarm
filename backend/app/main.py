@@ -84,6 +84,16 @@ DEMO_PROFILES = {
     }
 }
 
+@app.get("/")
+async def root():
+    return {
+        "status": "online",
+        "service": "ScholarSwarm Multi-Agent Swarm API",
+        "docs_url": "/docs",
+        "health_url": "/api/health",
+        "demo_profiles_url": "/api/demo/profiles"
+    }
+
 @app.get("/api/health")
 async def health_check():
     return {
